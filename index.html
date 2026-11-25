@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NODE // ACCESS</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #05080a;
+    color: #00ff41;
+    font-family: 'Courier New', monospace;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background-image: radial-gradient(#0b2b14 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  .box {
+    width: 100%;
+    max-width: 460px;
+    background: #0a1014;
+    border: 1px solid #00ff41;
+    box-shadow: 0 0 25px rgba(0, 255, 65, 0.25);
+    border-radius: 6px;
+    padding: 25px;
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    border-bottom: 1px solid #163820;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  h2 {
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+  }
+  input[type="checkbox"] { display: none; }
+  .field {
+    width: 100%;
+    padding: 11px;
+    margin-bottom: 12px;
+    background: #040709;
+    border: 1px solid #1b4d29;
+    color: #00ff41;
+    font-family: inherit;
+    font-size: 1rem;
+    border-radius: 4px;
+  }
+  .field:focus { outline: none; border-color: #00ff41; }
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    text-align: center;
+    background: rgba(0, 255, 65, 0.15);
+    border: 1px solid #00ff41;
+    color: #00ff41;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.2s;
+  }
+  .btn:hover { background: #00ff41; color: #000; box-shadow: 0 0 15px #00ff41; }
+  
+  /* Переключение экранов на чистом CSS */
+  .screen-2 { display: none; }
+  #hack:checked ~ .screen-1 { display: none; }
+  #hack:checked ~ .screen-2 { display: block; animation: fade 0.5s ease; }
+
+  @keyframes fade { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+  .alert {
+    color: #ff3b3b;
+    border: 1px solid #ff3b3b;
+    background: rgba(255, 59, 59, 0.08);
+    padding: 10px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+    border-radius: 4px;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed #1b4d29;
+    font-size: 0.92rem;
+  }
+  .row span { color: #7b9682; }
+  .row b { color: #fff; }
+  .note {
+    margin-top: 18px;
+    font-size: 0.75rem;
+    color: #5c7061;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="box">
+  <div class="top">
+    <span>● SYSTEM: ONLINE</span>
+    <span>AES-256</span>
+  </div>
+
+  <input type="checkbox" id="hack">
+
+  <!-- Экран 1: Вход -->
+  <div class="screen-1">
+    <h2>Авторизация узла</h2>
+    <input type="text" class="field" placeholder="Введите позывной...">
+    <input type="password" class="field" placeholder="Код доступа...">
+    <label for="hack" class="btn">Подключиться</label>
+  </div>
+
+  <!-- Экран 2: Результат -->
+  <div class="screen-2">
+    <div class="alert">⚠ ДОСТУП АДМИНИСТРАТОРА ОТКРЫТ</div>
+    <div class="row"><span>Статус узла:</span><b>ОТСЛЕЖИВАЕТСЯ</b></div>
+    <div class="row"><span>IP-адрес:</span><b>185.220.101.42</b></div>
+    <div class="row"><span>Протокол:</span><b>TCP / IPv4 (Masked)</b></div>
+    <div class="row"><span>Координаты:</span><b>55.7961° N, 49.1064° E</b></div>
+    <div class="row"><span>Режим:</span><b style="color:#00ff41">АКТИВЕН</b></div>
+  </div>
+
+  <div class="note">Визуальная шутка на чистом HTML/CSS. Данные статичны и никуда не отправляются.</div>
+</div>
+
+</body>
+</html>
