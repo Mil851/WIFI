@@ -3,137 +3,140 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NODE // ACCESS</title>
+<title>CYBER-OS // ROOT</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: #05080a;
-    color: #00ff41;
-    font-family: 'Courier New', monospace;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-    background-image: radial-gradient(#0b2b14 1px, transparent 1px);
-    background-size: 20px 20px;
-  }
-  .box {
-    width: 100%;
-    max-width: 460px;
-    background: #0a1014;
-    border: 1px solid #00ff41;
-    box-shadow: 0 0 25px rgba(0, 255, 65, 0.25);
-    border-radius: 6px;
-    padding: 25px;
-  }
-  .top {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.8rem;
-    border-bottom: 1px solid #163820;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-  }
-  h2 {
-    font-size: 1.3rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 15px;
-  }
-  input[type="checkbox"] { display: none; }
-  .field {
-    width: 100%;
-    padding: 11px;
-    margin-bottom: 12px;
-    background: #040709;
-    border: 1px solid #1b4d29;
-    color: #00ff41;
-    font-family: inherit;
-    font-size: 1rem;
-    border-radius: 4px;
-  }
-  .field:focus { outline: none; border-color: #00ff41; }
-  .btn {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    text-align: center;
-    background: rgba(0, 255, 65, 0.15);
-    border: 1px solid #00ff41;
-    color: #00ff41;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: 0.2s;
-  }
-  .btn:hover { background: #00ff41; color: #000; box-shadow: 0 0 15px #00ff41; }
-  
-  /* Переключение экранов на чистом CSS */
-  .screen-2 { display: none; }
-  #hack:checked ~ .screen-1 { display: none; }
-  #hack:checked ~ .screen-2 { display: block; animation: fade 0.5s ease; }
-
-  @keyframes fade { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-  .alert {
-    color: #ff3b3b;
-    border: 1px solid #ff3b3b;
-    background: rgba(255, 59, 59, 0.08);
-    padding: 10px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 15px;
-    border-radius: 4px;
-  }
-  .row {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px dashed #1b4d29;
-    font-size: 0.92rem;
-  }
-  .row span { color: #7b9682; }
-  .row b { color: #fff; }
-  .note {
-    margin-top: 18px;
-    font-size: 0.75rem;
-    color: #5c7061;
-    text-align: center;
-  }
+:root{--c:#00ff41;--bg:#040806;--p:#09120d}
+.red{--c:#ff2a2a;--bg:#0a0303;--p:#140707}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--c);font-family:monospace;min-height:100vh;padding:12px;transition:.3s;overflow-x:hidden}
+canvas{position:fixed;top:0;left:0;z-index:-1;opacity:.22}
+.wrap{max-width:520px;margin:0 auto;background:var(--p);border:1px solid var(--c);box-shadow:0 0 20px rgba(0,255,65,.15);border-radius:6px;padding:15px}
+.top{display:flex;justify-content:space-between;border-bottom:1px solid var(--c);padding-bottom:8px;margin-bottom:12px;font-size:.8rem}
+input,button{background:#020503;border:1px solid var(--c);color:var(--c);padding:10px;font-family:inherit;font-size:.95rem;border-radius:4px;outline:none}
+button{cursor:pointer;font-weight:bold;text-transform:uppercase;background:rgba(0,255,65,.1)}
+button:active{background:var(--c);color:#000}
+.hide{display:none!important}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.card{border:1px solid var(--c);padding:8px;font-size:.82rem;background:rgba(0,0,0,.4)}
+.card b{display:block;font-size:.95rem;color:#fff;margin-top:3px;word-break:break-all}
+.term{background:#010302;border:1px solid var(--c);height:160px;overflow-y:auto;padding:8px;font-size:.82rem;line-height:1.4;margin-bottom:8px}
+.cmd-row{display:flex;gap:6px}
+.cmd-row input{flex:1}
+.radar{width:130px;height:130px;border:1px solid var(--c);border-radius:50%;margin:10px auto;position:relative;overflow:hidden;background:radial-gradient(circle,transparent 60%,rgba(0,255,65,.15))}
+.sweep{position:absolute;width:50%;height:50%;top:0;left:50%;transform-origin:0 100%;background:linear-gradient(90deg,transparent,var(--c));opacity:.5;animation:spin 2.5s linear infinite}
+.dot{position:absolute;width:8px;height:8px;background:#fff;border-radius:50%;box-shadow:0 0 8px var(--c);cursor:pointer}
+@keyframes spin{to{transform:rotate(360deg)}}
+.btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.btns button{flex:1;font-size:.78rem;padding:8px 4px}
 </style>
 </head>
 <body>
+<canvas id="mx"></canvas>
 
-<div class="box">
-  <div class="top">
-    <span>● SYSTEM: ONLINE</span>
-    <span>AES-256</span>
-  </div>
-
-  <input type="checkbox" id="hack">
-
-  <!-- Экран 1: Вход -->
-  <div class="screen-1">
-    <h2>Авторизация узла</h2>
-    <input type="text" class="field" placeholder="Введите позывной...">
-    <input type="password" class="field" placeholder="Код доступа...">
-    <label for="hack" class="btn">Подключиться</label>
-  </div>
-
-  <!-- Экран 2: Результат -->
-  <div class="screen-2">
-    <div class="alert">⚠ ДОСТУП АДМИНИСТРАТОРА ОТКРЫТ</div>
-    <div class="row"><span>Статус узла:</span><b>ОТСЛЕЖИВАЕТСЯ</b></div>
-    <div class="row"><span>IP-адрес:</span><b>185.220.101.42</b></div>
-    <div class="row"><span>Протокол:</span><b>TCP / IPv4 (Masked)</b></div>
-    <div class="row"><span>Координаты:</span><b>55.7961° N, 49.1064° E</b></div>
-    <div class="row"><span>Режим:</span><b style="color:#00ff41">АКТИВЕН</b></div>
-  </div>
-
-  <div class="note">Визуальная шутка на чистом HTML/CSS. Данные статичны и никуда не отправляются.</div>
+<div class="wrap" id="login">
+  <div class="top"><span>● KERNEL v9.4</span><span>LOCKED</span></div>
+  <h3 style="margin-bottom:10px">ВХОД В СИСТЕМУ</h3>
+  <p style="font-size:.8rem;opacity:.8;margin-bottom:10px">Код <b>7777</b> — права Администратора. Любой другой — Гость.</p>
+  <input id="nick" placeholder="Позывной..." style="width:100%;margin-bottom:8px">
+  <input id="pass" type="password" placeholder="Код доступа (7777)..." style="width:100%;margin-bottom:10px">
+  <button onclick="auth()" style="width:100%">АВТОРИЗАЦИЯ</button>
 </div>
 
+<div class="wrap hide" id="panel">
+  <div class="top"><span id="role">USER</span><span id="bat">BAT: --%</span></div>
+
+  <div class="radar" onclick="pingRadar()">
+    <div class="sweep"></div>
+    <div class="dot" style="top:30%;left:60%" onclick="catchNode(event,'NODE-RU-01')"></div>
+    <div class="dot" style="top:65%;left:28%" onclick="catchNode(event,'SAT-LINK-4')"></div>
+  </div>
+
+  <div class="grid">
+    <div class="card">ТВОЙ IP:<b id="ip">Поиск...</b></div>
+    <div class="card">ЛОКАЦИЯ:<b id="loc">Поиск...</b></div>
+    <div class="card">ПРОВАЙДЕР:<b id="isp">Поиск...</b></div>
+    <div class="card">УСТРОЙСТВО:<b id="dev">-</b></div>
+  </div>
+
+  <div class="term" id="out"></div>
+
+  <div class="cmd-row">
+    <input id="cmd" placeholder="Команда (help, scan, matrix, alert)..." onkeydown="if(event.key==='Enter')run()">
+    <button onclick="run()">OK</button>
+  </div>
+
+  <div class="btns">
+    <button onclick="exec('scan')">Скан</button>
+    <button onclick="exec('matrix')">Матрица</button>
+    <button onclick="exec('alert')">Тревога</button>
+    <button onclick="exec('clear')">Очистить</button>
+  </div>
+</div>
+
+<script>
+let isAdmin=false,mxOn=false;
+const out=document.getElementById('out');
+function log(t){out.innerHTML+='<div>> '+t+'</div>';out.scrollTop=out.scrollHeight}
+
+function auth(){
+  const n=document.getElementById('nick').value.trim()||'GHOST';
+  const p=document.getElementById('pass').value.trim();
+  isAdmin=(p==='7777');
+  document.getElementById('login').classList.add('hide');
+  document.getElementById('panel').classList.remove('hide');
+  document.getElementById('role').textContent=(isAdmin?'★ ADMIN: ':'USER: ')+n.toUpperCase();
+  log('Добро пожаловать, '+n+'. Уровень: '+(isAdmin?'ROOT (Полный)':'GUEST'));
+  log('Нажми на точки на радаре или введи "help" в консоль.');
+  loadInfo();
+}
+
+function loadInfo(){
+  document.getElementById('dev').textContent=navigator.platform+' | '+screen.width+'x'+screen.height;
+  if(navigator.getBattery)navigator.getBattery().then(b=>{document.getElementById('bat').textContent='BAT: '+Math.round(b.level*100)+'%'});
+  fetch(['https://','ipwho','.','is/'].join('')).then(r=>r.json()).then(d=>{
+    document.getElementById('ip').textContent=d.ip||'Скрыт';
+    document.getElementById('loc').textContent=(d.city||'?')+', '+(d.country||'?');
+    document.getElementById('isp').textContent=(d.connection&&d.connection.isp)||'Неизвестно';
+  }).catch(()=>{document.getElementById('ip').textContent='192.168.1.1 (Local)'});
+}
+
+function pingRadar(){log('[RADAR] Импульс отправлен. Кликни по белой точке для перехвата.')}
+function catchNode(e,name){e.stopPropagation();log('[Перехват] Узел '+name+' взломан! Пакет данных расшифрован.')}
+
+function run(){
+  const i=document.getElementById('cmd');
+  if(!i.value.trim())return;
+  exec(i.value.trim().toLowerCase());
+  i.value='';
+}
+
+function exec(c){
+  log('$ '+c);
+  if(c==='help')log('Команды: scan, matrix, alert, trace, clear');
+  else if(c==='scan'){log('Сканирование портов...');setTimeout(()=>log('Открыты порты: 80 (HTTP), 443 (HTTPS), 22 (SSH)'),600)}
+  else if(c==='matrix'){mxOn=!mxOn;log('Фон Матрицы: '+(mxOn?'ВКЛ':'ВЫКЛ'))}
+  else if(c==='alert'){
+    if(!isAdmin)return log('ОШИБКА: Нужен код 7777 (права Администратора)!');
+    document.body.classList.toggle('red');
+    log('ВНИМАНИЕ! Боевой режим переключен.');
+  }
+  else if(c==='trace')log('Маршрут: localhost -> шлюз провайдера -> спутник [OK]');
+  else if(c==='clear')out.innerHTML='';
+  else log('Неизвестная команда. Введи help');
+}
+
+const cv=document.getElementById('mx'),ctx=cv.getContext('2d');
+cv.width=innerWidth;cv.height=innerHeight;
+const cols=Array(Math.floor(cv.width/14)).fill(0);
+setInterval(()=>{
+  if(!mxOn){ctx.clearRect(0,0,cv.width,cv.height);return}
+  ctx.fillStyle='rgba(0,0,0,0.08)';ctx.fillRect(0,0,cv.width,cv.height);
+  ctx.fillStyle=document.body.classList.contains('red')?'#ff2a2a':'#00ff41';
+  cols.forEach((y,idx)=>{
+    ctx.fillText(String.fromCharCode(0x30A0+Math.random()*96),idx*14,y);
+    cols[idx]=y>cv.height&&Math.random()>.975?0:y+14;
+  });
+},50);
+</script>
 </body>
 </html>
