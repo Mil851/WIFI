@@ -1,5 +1,5 @@
 let isAdmin = false, mxOn = false;
-const SECRET_CODE = '7777'; // Твой секретный код админа (подсказки на экране больше нет)
+const SECRET_CODE = '7777';
 const out = document.getElementById('out');
 
 function log(t) {
@@ -10,13 +10,15 @@ function log(t) {
 function getDeviceModel() {
   const ua = navigator.userAgent;
   let model = 'ПК / Неизвестно';
-  if (/iPhone/.test(ua)) model = 'Apple iPhone';
-  else if (/iPad/.test(ua)) model = 'Apple iPad';
-  else if (/Android/.test(ua)) {
-    const match = ua.match(/Android\s[\d.]+;\s([^;)]+)/);
-    model = match && match[1] && match[1] !== 'K' ? match[1].trim() : 'Android Smartphone';
-  } else if (/Windows/.test(ua)) model = 'Windows PC';
-  else if (/Mac OS/.test(ua)) model = 'Apple Mac';
+  if (ua.indexOf('iPhone') > -1) model = 'Apple iPhone';
+  else if (ua.indexOf('iPad') > -1) model = 'Apple iPad';
+  else if (ua.indexOf('Android') > -1) {
+    const parts = ua.split(';');
+    const part2 = parts.length > 2 ? parts.slice(2, 3).join('') : '';
+    const raw = part2 ? part2.split(')').slice(0, 1).join('').trim() : '';
+    model = (raw && raw !== 'K') ? raw : 'Android Smartphone';
+  } else if (ua.indexOf('Windows') > -1) model = 'Windows PC';
+  else if (ua.indexOf('Mac OS') > -1) model = 'Apple Mac';
   return model + ' (' + screen.width + 'x' + screen.height + ')';
 }
 
@@ -35,16 +37,16 @@ function auth() {
 function loadInfo() {
   document.getElementById('dev').textContent = getDeviceModel();
   if (navigator.getBattery) {
-    navigator.getBattery().then(b => {
+    navigator.getBattery().then(function(b) {
       document.getElementById('bat').textContent = 'BAT: ' + Math.round(b.level * 100) + '%';
     });
   }
   const url = ['https://', 'ipwho', '.', 'is/'].join('');
-  fetch(url).then(r => r.json()).then(d => {
+  fetch(url).then(function(r) { return r.json(); }).then(function(d) {
     document.getElementById('ip').textContent = d.ip || 'Скрыт';
     document.getElementById('loc').textContent = (d.city || '?') + ', ' + (d.country || '?');
     document.getElementById('isp').textContent = (d.connection && d.connection.isp) || 'Неизвестно';
-  }).catch(() => {
+  }).catch(function() {
     document.getElementById('ip').textContent = '192.168.1.1 (Local)';
   });
 }
@@ -70,7 +72,7 @@ function exec(c) {
   if (c === 'help') log('Команды: scan, matrix, alert, trace, clear');
   else if (c === 'scan') {
     log('Сканирование портов...');
-    setTimeout(() => log('Открыты порты: 80 (HTTP), 443 (HTTPS), 22 (SSH)'), 600);
+    setTimeout(function() { log('Открыты порты: 80 (HTTP), 443 (HTTPS), 22 (SSH)'); }, 600);
   }
   else if (c === 'matrix') {
     mxOn = !mxOn;
@@ -90,12 +92,12 @@ const cv = document.getElementById('mx'), ctx = cv.getContext('2d');
 cv.width = innerWidth; cv.height = innerHeight;
 const cols = Array(Math.floor(cv.width / 14)).fill(0);
 
-setInterval(() => {
+setInterval(function() {
   if (!mxOn) { ctx.clearRect(0, 0, cv.width, cv.height); return; }
   ctx.fillStyle = 'rgba(0,0,0,0.08)';
   ctx.fillRect(0, 0, cv.width, cv.height);
   ctx.fillStyle = document.body.classList.contains('red') ? '#ff2a2a' : '#00ff41';
-  cols.forEach((y, idx) => {
+  cols.forEach(function(y, idx) {
     ctx.fillText(String.fromCharCode(0x30A0 + Math.random() * 96), idx * 14, y);
     cols[idx] = y > cv.height && Math.random() > 0.975 ? 0 : y + 14;
   });
